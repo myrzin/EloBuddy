@@ -98,6 +98,7 @@ namespace MyrzTristana
         {
             var spellLevel = Player.Instance.Spellbook.GetSpell(slot).Level;
             float damage = 0;
+            var damageType = DamageType.Magical;
 
             if (spellLevel == 0)
             {
@@ -113,13 +114,13 @@ namespace MyrzTristana
                     break;
 
                 case SpellSlot.E:
-
+                    damageType = DamageType.Mixed;
                     damage = GetEmDamage(target) + GetEpDamage(target);
                     break;
 
                 case SpellSlot.R:
 
-                    damage = new float[] {250, 350, 450}[spellLevel] + Player.Instance.TotalMagicalDamage;
+                    damage = new float[] {300, 400, 500}[spellLevel] + Player.Instance.TotalMagicalDamage;
                     break;
             }
 
@@ -128,7 +129,7 @@ namespace MyrzTristana
                 return 0;
             }
 
-            return Player.Instance.CalculateDamageOnUnit(target, DamageType.Mixed, damage) - 20;
+            return Player.Instance.CalculateDamageOnUnit(target, damageType, damage) - 20;
         }
     }
 }
