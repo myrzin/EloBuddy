@@ -10,3 +10,15 @@ C:\Users\gtgri\OneDrive\Documents\Visual Studio 2015\Projects\MyrzBlitz\MyrzBlit
 C:\Users\gtgri\OneDrive\Documents\Visual Studio 2015\Projects\MyrzBlitz\MyrzBlitz\obj\Release\MyrzBlitz.csprojResolveAssemblyReference.cache
 C:\Users\gtgri\OneDrive\Documents\Visual Studio 2015\Projects\MyrzBlitz\MyrzBlitz\obj\Release\MyrzBlitz.exe
 C:\Users\gtgri\OneDrive\Documents\Visual Studio 2015\Projects\MyrzBlitz\MyrzBlitz\obj\Release\MyrzBlitz.pdb
+C:\Users\gtgri\OneDrive\Documents\GitHub\EloBuddy\MyrzBlitz\MyrzBlitz\bin\Release\MyrzBlitz.exe.config
+C:\Users\gtgri\OneDrive\Documents\GitHub\EloBuddy\MyrzBlitz\MyrzBlitz\bin\Release\MyrzBlitz.exe
+C:\Users\gtgri\OneDrive\Documents\GitHub\EloBuddy\MyrzBlitz\MyrzBlitz\bin\Release\MyrzBlitz.pdb
+C:\Users\gtgri\OneDrive\Documents\GitHub\EloBuddy\MyrzBlitz\MyrzBlitz\bin\Release\EloBuddy.dll
+C:\Users\gtgri\OneDrive\Documents\GitHub\EloBuddy\MyrzBlitz\MyrzBlitz\bin\Release\EloBuddy.SDK.dll
+C:\Users\gtgri\OneDrive\Documents\GitHub\EloBuddy\MyrzBlitz\MyrzBlitz\bin\Release\SharpDX.dll
+C:\Users\gtgri\OneDrive\Documents\GitHub\EloBuddy\MyrzBlitz\MyrzBlitz\bin\Release\SharpDX.Direct3D9.dll
+C:\Users\gtgri\OneDrive\Documents\GitHub\EloBuddy\MyrzBlitz\MyrzBlitz\bin\Release\EloBuddy.Sandbox.dll
+C:\Users\gtgri\OneDrive\Documents\GitHub\EloBuddy\MyrzBlitz\MyrzBlitz\bin\Release\Newtonsoft.Json.dll
+C:\Users\gtgri\OneDrive\Documents\GitHub\EloBuddy\MyrzBlitz\MyrzBlitz\obj\Release\MyrzBlitz.csprojResolveAssemblyReference.cache
+C:\Users\gtgri\OneDrive\Documents\GitHub\EloBuddy\MyrzBlitz\MyrzBlitz\obj\Release\MyrzBlitz.exe
+C:\Users\gtgri\OneDrive\Documents\GitHub\EloBuddy\MyrzBlitz\MyrzBlitz\obj\Release\MyrzBlitz.pdb

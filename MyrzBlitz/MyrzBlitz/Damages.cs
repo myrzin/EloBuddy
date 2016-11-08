@@ -40,7 +40,8 @@ namespace MyrzBlitz
         {
             // Helpers
             var spellLevel = Player.Instance.Spellbook.GetSpell(slot).Level;
-            const DamageType damageType = DamageType.Mixed;
+            var damageType = DamageType.Magical;
+
             float damage = 0;
 
             // Validate spell level
@@ -59,6 +60,7 @@ namespace MyrzBlitz
 
                 case SpellSlot.E:
 
+                    damageType = DamageType.Physical;
                     damage = 1f * Player.Instance.TotalAttackDamage + 1f * (Player.Instance.TotalAttackDamage-Player.Instance.BaseAttackDamage);
                     break;
 
