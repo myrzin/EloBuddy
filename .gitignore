@@ -1,6 +1,6 @@
-MyrzBlitz/.vs/MyrzBlitz/v14/.suo
-*.exe
-*.pdb
-MyrzTristana/.vs/MyrzTristana/v14/.suo
-MyrzTristana/MyrzTristana/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-MyrzTristana/MyrzTristana/obj/Debug/MyrzTristana.csproj.FileListAbsolute.txt
+MyrzBlitz/.vs/
+MyrzTristana/.vs/
+MyrzBlitz/MyrzBlitz/obj/
+MMyrzBlitz/MyrzBlitz/bin/
+MyrzTristana/MyrzTristana/obj/
+MyrzTristana/MyrzTristana/bin/
