@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
+using EloBuddy.SDK.Events;
 
 namespace MyrzBlitz.Modes
 {
@@ -67,22 +67,30 @@ namespace MyrzBlitz.Modes
 
             if (Q.IsReady() && Config.PermaActive.QDashing)
             {
-                var target = TargetSelector.GetTarget(Q.Range, DamageType.Mixed);
-                if (target != null)
+                foreach (
+                    var target in
+                        EntityManager.Heroes.Enemies.Where(
+                            e =>
+                                e.IsValidTarget() && e != null && e.Distance(Player.ServerPosition) < Q.Range &&
+                                e.IsDashing()))
                 {
                     var pred = Q.GetPrediction(target);
-                    if (target.Distance(Player.ServerPosition) >= Config.Misc.MinDisQ)
+                    if (pred.HitChance == HitChance.Dashing)
                     {
-                        if (pred.HitChance == HitChance.Dashing)
-                        {
-                            Console.WriteLine("Dashing");
-                            Q.Cast(pred.CastPosition);
-                        }
-                        else if (pred.HitChance == HitChance.Immobile)
-                        {
-                            Console.WriteLine("Immobile");
-                            Q.Cast(pred.CastPosition);
-                        }
+                        Q.Cast(pred.CastPosition);
+                    }
+                }
+                foreach (
+                    var target in
+                        EntityManager.Heroes.Enemies.Where(
+                            e =>
+                                e.IsValidTarget() && e != null && e.Distance(Player.ServerPosition) < Q.Range &&
+                                !e.CanMove))
+                {
+                    var pred = Q.GetPrediction(target);
+                    if (pred.HitChance == HitChance.Immobile)
+                    {
+                        Q.Cast(pred.CastPosition);
                     }
                 }
             }
