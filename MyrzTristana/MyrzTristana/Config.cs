@@ -52,6 +52,7 @@ namespace MyrzTristana
 
                 private static readonly CheckBox _useQ;
                 private static readonly CheckBox _useW;
+                private static readonly Slider _useWMinHP;
                 private static readonly CheckBox _useWKill;
                 private static readonly Slider _useWMax;
                 private static readonly CheckBox _useWTower;
@@ -62,6 +63,8 @@ namespace MyrzTristana
                 public static bool UseQ => _useQ.CurrentValue;
 
                 public static bool UseW => _useW.CurrentValue;
+
+                public static int UseWMinHealth => _useWMinHP.CurrentValue;
 
                 public static bool UseWKill => _useWKill.CurrentValue;
 
@@ -81,6 +84,7 @@ namespace MyrzTristana
                     _menu.AddGroupLabel(GroupName);
                     _useQ = _menu.Add("combo_useQ", new CheckBox("Use Q"));
                     _useW = _menu.Add("comboUseW", new CheckBox("Use W", false));
+                    _useWMinHP = _menu.Add("useWMinHP", new Slider("Min. Health % to use W", 30));
                     _useWKill = _menu.Add("comboWKill", new CheckBox("W Only if Killable"));
                     _useWMax = _menu.Add("useWMax", new Slider("Max Enemies to Use W", 2, 1, 5));
                     _useWTower = _menu.Add("useWTower", new CheckBox("Use W Under Tower", false));

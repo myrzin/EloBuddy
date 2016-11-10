@@ -22,7 +22,7 @@ namespace MyrzTristana
             // Initialize spells
             var range = (uint)(550 + 7*(Player.Instance.Level - 1));
             Q = new Spell.Active(SpellSlot.Q, range);
-            W = new Spell.Skillshot(SpellSlot.W, 900, SkillShotType.Circular, 250, 1200, 150);
+            W = new Spell.Skillshot(SpellSlot.W, 925, SkillShotType.Circular, 250, 1200, 150);
             E = new Spell.Targeted(SpellSlot.E, range);
             R = new Spell.Targeted(SpellSlot.R, range);
 

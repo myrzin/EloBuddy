@@ -1,5 +1,4 @@
-﻿using System;
-using EloBuddy;
+﻿using EloBuddy;
 using EloBuddy.SDK;
 
 namespace MyrzTristana.Modes
@@ -14,7 +13,7 @@ namespace MyrzTristana.Modes
 
         public override void Execute()
         {
-            if (W.IsReady() && Config.Modes.Combo.UseW && Config.PermaActive.WKs)
+            if (W.IsReady() && Config.Modes.Combo.UseW && Config.PermaActive.WKs && Config.Modes.Combo.UseWMax < Player.HealthPercent)
             {
                 var target = TargetSelector.GetTarget(W.Range, DamageType.Physical) ??
                              TargetSelector.GetTarget(W.Range, DamageType.Magical);
@@ -26,7 +25,6 @@ namespace MyrzTristana.Modes
                     {
                         if (Config.Modes.Combo.UseWMax >= target.CountEnemiesInRange(1500))
                         {
-                            Console.WriteLine("KSing with W");
                             W.Cast(pred.CastPosition);
                         }
                     }
@@ -34,7 +32,6 @@ namespace MyrzTristana.Modes
                     {
                         if (Config.Modes.Combo.UseWMax >= target.CountEnemiesInRange(1500))
                         {
-                            Console.WriteLine("KSing with W");
                             W.Cast(pred.CastPosition);
                         }
                     }
@@ -59,7 +56,7 @@ namespace MyrzTristana.Modes
                     R.Cast(target);
                 }
             }
-            if (R.IsReady() && W.IsReady() && Config.PermaActive.WKs && Config.PermaActive.RKs && Config.Modes.Combo.UseW)
+            if (R.IsReady() && W.IsReady() && Config.PermaActive.WKs && Config.PermaActive.RKs && Config.Modes.Combo.UseW && Config.Modes.Combo.UseWMax < Player.HealthPercent)
             {
                 var target = TargetSelector.GetTarget(W.Range, DamageType.Physical) ??
                              TargetSelector.GetTarget(W.Range, DamageType.Magical);
@@ -70,7 +67,6 @@ namespace MyrzTristana.Modes
                     {
                         if (Config.Modes.Combo.UseWMax >= target.CountEnemiesInRange(1500))
                         {
-                            Console.WriteLine("KSing with W R");
                             W.Cast(pred.CastPosition);
                         }
                     }
@@ -78,7 +74,6 @@ namespace MyrzTristana.Modes
                     {
                         if (Config.Modes.Combo.UseWMax >= target.CountEnemiesInRange(1500))
                         {
-                            Console.WriteLine("KSing with W");
                             W.Cast(pred.CastPosition);
                         }
                     }
@@ -96,7 +91,6 @@ namespace MyrzTristana.Modes
                             x => x.HasBuff("TristanaEChargeSound") && x.IsValidTarget(SpellManager.E.Range));
                     if (target != null && Player.Distance(target) < E.Range)
                     {
-                        Chat.Print("ForcedTarget = " + target.BaseSkinName);
                         Orbwalker.ForcedTarget = target;
                     }
                     else Orbwalker.ForcedTarget = null;

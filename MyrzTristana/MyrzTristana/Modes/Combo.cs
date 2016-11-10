@@ -1,5 +1,4 @@
-﻿using System;
-using EloBuddy;
+﻿using EloBuddy;
 using EloBuddy.SDK;
 
 namespace MyrzTristana.Modes
@@ -30,7 +29,7 @@ namespace MyrzTristana.Modes
             if (W.IsEnabledAndReady(Orbwalker.ActiveModes.Combo))
             {
                 var target = TargetSelector.GetTarget(W.Range, DamageType.Physical) ?? TargetSelector.GetTarget(W.Range, DamageType.Magical);
-                if (target != null && Config.Modes.Combo.UseW)
+                if (target != null && Config.Modes.Combo.UseW && Config.Modes.Combo.UseWMinHealth < Player.HealthPercent)
                 {
                     var pred = W.GetPrediction(target);
                     if (Config.Modes.Combo.UseWKill && W.GetRealDamage(target) > target.Health)
@@ -39,7 +38,6 @@ namespace MyrzTristana.Modes
                         {
                             if (Config.Modes.Combo.UseWMax >= target.CountEnemiesInRange(1500))
                             {
-                                Console.WriteLine(DateTime.Now + "UseW > UseWKill > Killable > !UseWTower > UseWMax, Casting");
                                 W.Cast(pred.CastPosition);
                             }
                         }
@@ -47,7 +45,6 @@ namespace MyrzTristana.Modes
                         {
                             if (Config.Modes.Combo.UseWMax >= target.CountEnemiesInRange(1500))
                             {
-                                Console.WriteLine(DateTime.Now + "UseW > UseWKill > Killable > UseWTower > UseWMax, Casting");
                                 W.Cast(pred.CastPosition);
                             }
                         }
@@ -58,7 +55,6 @@ namespace MyrzTristana.Modes
                         {
                             if (Config.Modes.Combo.UseWMax >= target.CountEnemiesInRange(1500))
                             {
-                                Console.WriteLine(DateTime.Now + "UseW > UseWStacks > !UseWTower, UseWMax, Casting");
                                 W.Cast(pred.CastPosition);
                             }
                         }
@@ -66,7 +62,6 @@ namespace MyrzTristana.Modes
                         {
                             if (Config.Modes.Combo.UseWMax >= target.CountEnemiesInRange(1500))
                             {
-                                Console.WriteLine(DateTime.Now + "UseW > UseWStacks > UseWTower, UseWMax, Casting");
                                 W.Cast(pred.CastPosition);
                             }
                         }
@@ -75,7 +70,6 @@ namespace MyrzTristana.Modes
                     {
                         if (Config.Modes.Combo.UseWMax >= target.CountEnemiesInRange(1500))
                         {
-                            Console.WriteLine(DateTime.Now + "UseW > !UseWTower > UseWMax, casting");
                             W.Cast(pred.CastPosition);
                         }
                     }
@@ -83,7 +77,6 @@ namespace MyrzTristana.Modes
                     {
                         if (Config.Modes.Combo.UseWMax >= target.CountEnemiesInRange(1500))
                         {
-                            Console.WriteLine(DateTime.Now + "UseW > UseWTower > UseWMax , Casting");
                             W.Cast(pred.CastPosition);
                         }
                     }

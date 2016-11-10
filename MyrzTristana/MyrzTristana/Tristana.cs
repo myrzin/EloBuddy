@@ -56,8 +56,8 @@ namespace MyrzTristana
                 {
                     if (SpellManager.E.Level > 0)
                     {
-                        var x = unit.HPBarPosition.X + 45;
-                        var y = unit.HPBarPosition.Y - 15;
+                        var x = unit.HPBarPosition.X + 25;
+                        var y = unit.HPBarPosition.Y - 30;
                         var stacks = Damages.GetStacks(unit);
                         if (unit.HasBuff("TristanaEChargeSound"))
                         {
