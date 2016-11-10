@@ -1,6 +1,5 @@
 ﻿using EloBuddy.SDK.Menu;
 using EloBuddy.SDK.Menu.Values;
-using System;
 
 namespace MyrzTristana
 {
@@ -35,10 +34,10 @@ namespace MyrzTristana
                 _menu.AddSeparator();
                 Harass.Initialize();
                 _menu.AddSeparator();
-                LaneClear.Initialize();
+                /*LaneClear.Initialize();
                 _menu.AddSeparator();
                 JungleClear.Initialize();
-                _menu.AddSeparator();
+                _menu.AddSeparator();*/
                 PermaActive.Initialize();
                 _menu.AddSeparator();
             }
@@ -125,7 +124,7 @@ namespace MyrzTristana
                 }
             }
 
-            public static class LaneClear
+            /*public static class LaneClear
             {
                 public const string GroupName = "LaneClear";
 
@@ -189,7 +188,7 @@ namespace MyrzTristana
                 public static void Initialize()
                 {
                 }
-            }
+            }*/
         }
 
         public static class PermaActive

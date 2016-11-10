@@ -58,7 +58,7 @@ namespace MyrzTristana
                             return Config.Modes.Harass.UseE;
                     }
                     break;
-                case Orbwalker.ActiveModes.LaneClear:
+                /*case Orbwalker.ActiveModes.LaneClear:
                     switch (spell.Slot)
                     {
                         case SpellSlot.Q:
@@ -75,7 +75,7 @@ namespace MyrzTristana
                         case SpellSlot.E:
                             return Config.Modes.JungleClear.UseE;
                     }
-                    break;
+                    break;*/
             }
 
             return false;

@@ -38,7 +38,7 @@ namespace MyrzTristana
             Drawing.OnDraw += OnDraw;
             Gapcloser.OnGapcloser += OnGapcloser;
             Interrupter.OnInterruptableSpell += OnInterruptableSpell;
-            Orbwalker.OnPreAttack += OnPreAttack;
+            Orbwalker.OnPostAttack += OnPostAttack;
         }
 
         private static void OnDraw(EventArgs args)
@@ -48,6 +48,8 @@ namespace MyrzTristana
                 Circle.Draw(SpellManager.W.GetColor(), SpellManager.W.Range, Player.Instance);
             }
 
+            
+
             if (Config.Drawing.DrawEStacks)
             {
                 foreach (var unit in EntityManager.Heroes.Enemies.Where(e => e.IsValidTarget() && e.HasBuff("TristanaEChargeSound")))
@@ -55,7 +57,7 @@ namespace MyrzTristana
                     if (SpellManager.E.Level > 0)
                     {
                         var x = unit.HPBarPosition.X + 45;
-                        var y = unit.HPBarPosition.Y - 25;
+                        var y = unit.HPBarPosition.Y - 15;
                         var stacks = Damages.GetStacks(unit);
                         if (unit.HasBuff("TristanaEChargeSound"))
                         {
@@ -63,7 +65,7 @@ namespace MyrzTristana
                             {
                                 for (var i = 0; 4 > i; i++)
                                 {
-                                    Drawing.DrawLine(x + i * 20, y, x + i * 20 + 10, y, 10, i > (stacks-1) ? Color.DarkGray : Color.OrangeRed);
+                                    Drawing.DrawLine(x + i * 20, y, x + i * 20 + 10, y, 10, i > (stacks-1) ? Color.PapayaWhip : Color.DarkRed);
                                 }
                             }
                         }
@@ -75,29 +77,28 @@ namespace MyrzTristana
             DamageIndicator.HealthbarEnabled = Config.Drawing.IndicatorHealthbar;
         }
 
-        private static void OnPreAttack(AttackableUnit target, Orbwalker.PreAttackArgs args)
+        private static void OnPostAttack(AttackableUnit unit, EventArgs args)
         {
-            if (Config.PermaActive.FocusE)
+            if (!(unit is AIHeroClient))
             {
-                if (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo) || Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Harass))
-                {
-                    foreach (
-                        var enemy in
-                            EntityManager.Heroes.Enemies.Where(
-                                enemy =>
-                                    enemy.IsValidTarget(Player.Instance.GetAutoAttackRange()) &&
-                                    enemy.HasBuff("TristanaEChargeSound")))
-                    {
-                        Orbwalker.ForcedTarget = enemy;
-                    }
-                }
+                return;
             }
-            if (!Config.PermaActive.FocusE ||
-                !EntityManager.Heroes.Enemies.Any(enemy => enemy.IsValidTarget(Player.Instance.GetAutoAttackRange())) ||
-                (Orbwalker.ActiveModesFlags.HasFlag(Orbwalker.ActiveModes.Combo) &&
-                 (Orbwalker.ForcedTarget?.GetType() != typeof (AIHeroClient))))
+            var target = TargetSelector.GetTarget(SpellManager.Q.Range, DamageType.Physical);
+            var hero = (AIHeroClient)unit;
+            if (!hero.IsValid || hero.Type != GameObjectType.AIHeroClient)
             {
-                Orbwalker.ForcedTarget = null;
+                return;
+            }
+            if (target != null)
+            {
+                if (SpellManager.Q.IsEnabledAndReady(Orbwalker.ActiveModes.Combo) && Config.Modes.Combo.UseQ)
+                {
+                    SpellManager.Q.Cast();
+                }
+                if (SpellManager.Q.IsEnabledAndReady(Orbwalker.ActiveModes.Harass) && Config.Modes.Harass.UseQ)
+                {
+                    SpellManager.Q.Cast();
+                }
             }
         }
 

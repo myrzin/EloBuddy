@@ -79,6 +79,7 @@ namespace MyrzBlitz
                         // Draw the line
                         OverlayLine.Draw(DrawingColor, startPoint, endPoint);
                         Drawing.DrawLine(startPoint, endPoint, LineThickness, DrawingColor);
+
                     }
 
                     if (PercentEnabled)

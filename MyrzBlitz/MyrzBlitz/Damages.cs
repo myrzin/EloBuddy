@@ -76,8 +76,7 @@ namespace MyrzBlitz
                 return 0;
             }
 
-            // Calculate damage on target and return (-20 to make it actually more accurate Kappa)
-            return Player.Instance.CalculateDamageOnUnit(target, damageType, damage) - 20;
+            return Player.Instance.CalculateDamageOnUnit(target, damageType, damage);
         }
     }
 }

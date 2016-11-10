@@ -15,17 +15,6 @@ namespace MyrzTristana.Modes
 
         public override void Execute()
         {
-            if (Q.IsEnabledAndReady(Orbwalker.ActiveModes.Harass))
-            {
-                var target = TargetSelector.GetTarget(Q.Range, DamageType.Magical) ?? TargetSelector.GetTarget(Q.Range, DamageType.Physical);
-                if (target != null && h.UseQ && h.ManaUsage < Player.ManaPercent)
-                {
-                    {
-                        Q.Cast();
-                    }
-                }
-            }
-
             if (E.IsEnabledAndReady(Orbwalker.ActiveModes.Harass))
             {
                 var target = TargetSelector.GetTarget(E.Range, DamageType.Magical) ?? TargetSelector.GetTarget(E.Range, DamageType.Physical);

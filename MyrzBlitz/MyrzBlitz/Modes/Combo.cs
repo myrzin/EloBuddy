@@ -84,7 +84,7 @@ namespace MyrzBlitz.Modes
 
             if (R.IsEnabledAndReady(Orbwalker.ActiveModes.Combo))
             {
-                var target = EntityManager.Heroes.Enemies.Where(t => R.IsInRange(t) && t.IsValid).ToArray();
+                var target = EntityManager.Heroes.Enemies.Where(t => t.IsValidTarget(SpellManager.R.Range) && t.IsValid).ToArray();
                 if (target.Count() >= Config.Modes.Combo.UseRMin)
                 {
                     R.Cast();

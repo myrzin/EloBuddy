@@ -14,15 +14,6 @@ namespace MyrzTristana.Modes
 
         public override void Execute()
         {
-            if (Q.IsEnabledAndReady(Orbwalker.ActiveModes.Combo))
-            {
-                var target = TargetSelector.GetTarget(Q.Range, DamageType.Physical);
-                if (target != null && Config.Modes.Combo.UseQ)
-                {
-                    Q.Cast();
-                }
-            }
-
             if (W.IsReady() && E.IsReady() &&
                 R.IsReady())
             {
@@ -44,7 +35,7 @@ namespace MyrzTristana.Modes
                     var pred = W.GetPrediction(target);
                     if (Config.Modes.Combo.UseWKill && W.GetRealDamage(target) > target.Health)
                     {
-                        if (!Config.Modes.Combo.UseWTower && target.IsUnderHisturret())
+                        if (!Config.Modes.Combo.UseWTower && !target.IsUnderHisturret())
                         {
                             if (Config.Modes.Combo.UseWMax >= target.CountEnemiesInRange(1500))
                             {

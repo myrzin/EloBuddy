@@ -25,7 +25,7 @@ namespace MyrzBlitz
             Q = new Spell.Skillshot(SpellSlot.Q, 900, SkillShotType.Linear, 250, 1800, 70);
             W = new Spell.Active(SpellSlot.W, 600);
             E = new Spell.Active(SpellSlot.E, 250);
-            R = new Spell.Active(SpellSlot.R, 600);
+            R = new Spell.Active(SpellSlot.R, 550);
 
             SetSmite();
 

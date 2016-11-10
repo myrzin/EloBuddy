@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
@@ -72,8 +73,14 @@ namespace MyrzBlitz.Modes
                     var pred = Q.GetPrediction(target);
                     if (target.Distance(Player.ServerPosition) >= Config.Misc.MinDisQ)
                     {
-                        if (pred.HitChance == HitChance.Dashing || pred.HitChance == HitChance.Immobile)
+                        if (pred.HitChance == HitChance.Dashing)
                         {
+                            Console.WriteLine("Dashing");
+                            Q.Cast(pred.CastPosition);
+                        }
+                        else if (pred.HitChance == HitChance.Immobile)
+                        {
+                            Console.WriteLine("Immobile");
                             Q.Cast(pred.CastPosition);
                         }
                     }

@@ -44,7 +44,7 @@ namespace MyrzBlitz
 
             // Listend to required events
             Drawing.OnDraw += OnDraw;
-            Gapcloser.OnGapcloser += OnGapcloser;
+            //Gapcloser.OnGapcloser += OnGapcloser;
             Interrupter.OnInterruptableSpell += OnInterruptableSpell;
             Obj_AI_Base.OnProcessSpellCast += Obj_AI_Base_OnProcessSpellCast;
         }
@@ -91,21 +91,28 @@ namespace MyrzBlitz
             DamageIndicator.HealthbarEnabled = Config.Drawing.IndicatorHealthbar;
         }
 
-        private static void OnGapcloser(AIHeroClient sender, Gapcloser.GapcloserEventArgs args)
+        /*private static void OnGapcloser(AIHeroClient sender, Gapcloser.GapcloserEventArgs args)
         {
-            if (sender.IsEnemy && Config.Misc.GapcloserR && SpellManager.R.IsReady() && SpellManager.R.IsInRange(args.End))
+            if (sender.IsEnemy && Config.Misc.GapcloserQ && SpellManager.Q.IsReady() && SpellManager.Q.IsInRange(args.End))
             {
                 // Cast E on the gapcloser caster
-                SpellManager.R.Cast();
+                SpellManager.Q.Cast(sender);
             }
-        }
+        }*/
 
         private static void OnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs args)
         {
-            if (sender.IsEnemy && args.DangerLevel == DangerLevel.High && Config.Misc.InterruptR && SpellManager.R.IsReady() && SpellManager.R.IsInRange(sender))
+            if (sender.IsEnemy && args.DangerLevel == DangerLevel.High)
             {
-                // Cast E on the unit casting the interruptable spell
-                SpellManager.R.Cast();
+                if (Config.Misc.InterruptR && SpellManager.R.IsReady() && SpellManager.R.IsInRange(sender))
+                {
+                    SpellManager.R.Cast();
+                }
+                else if (Config.Misc.InterruptQ && SpellManager.Q.IsReady() && SpellManager.Q.IsInRange(sender))
+                {
+                    var pred = SpellManager.Q.GetPrediction(sender);
+                    SpellManager.Q.Cast(pred.CastPosition);
+                }
             }
         }
     }

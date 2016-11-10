@@ -21,6 +21,7 @@ namespace MyrzTristana
         private static readonly Vector2 _percentOffset = new Vector2(0, -15);
 
         private static Color _drawingColor;
+
         public static Color DrawingColor
         {
             get { return _drawingColor; }
@@ -68,23 +69,31 @@ namespace MyrzTristana
                     if (HealthbarEnabled)
                     {
                         // Get remaining HP after damage applied in percent and the current percent of health
-                        var damagePercentage = (unit.TotalShieldHealth() - damage > 0 ? unit.TotalShieldHealth() - damage : 0) /
+                        var damagePercentage = (unit.TotalShieldHealth() - damage > 0
+                            ? unit.TotalShieldHealth() - damage
+                            : 0)/
                                                (unit.MaxHealth + unit.AllShield + unit.AttackShield + unit.MagicShield);
-                        var currentHealthPercentage = unit.TotalShieldHealth() / (unit.MaxHealth + unit.AllShield + unit.AttackShield + unit.MagicShield);
+                        var currentHealthPercentage = unit.TotalShieldHealth()/
+                                                      (unit.MaxHealth + unit.AllShield + unit.AttackShield +
+                                                       unit.MagicShield);
 
                         // Calculate start and end point of the bar indicator
-                        var startPoint = new Vector2(unit.HPBarPosition.X + _barOffset.X + damagePercentage * BarWidth, unit.HPBarPosition.Y + _barOffset.Y - 5);
-                        var endPoint = new Vector2(unit.HPBarPosition.X + _barOffset.X + currentHealthPercentage * BarWidth + 1, unit.HPBarPosition.Y + _barOffset.Y - 5);
+                        var startPoint = new Vector2(unit.HPBarPosition.X + _barOffset.X + damagePercentage*BarWidth,
+                            unit.HPBarPosition.Y + _barOffset.Y - 5);
+                        var endPoint =
+                            new Vector2(unit.HPBarPosition.X + _barOffset.X + currentHealthPercentage*BarWidth + 1,
+                                unit.HPBarPosition.Y + _barOffset.Y - 5);
 
                         // Draw the line
                         OverlayLine.Draw(DrawingColor, startPoint, endPoint);
                         Drawing.DrawLine(startPoint, endPoint, LineThickness, DrawingColor);
-                    }
 
-                    if (PercentEnabled)
-                    {
-                        // Get damage in percent and draw next to the health bar
-                        Drawing.DrawText(unit.HPBarPosition + _percentOffset, DrawingColor, string.Concat(Math.Ceiling(damage / unit.TotalShieldHealth() * 100), "%"), 10);
+                        if (PercentEnabled)
+                        {
+                            // Get damage in percent and draw next to the health bar
+                            Drawing.DrawText(unit.HPBarPosition + _percentOffset, DrawingColor,
+                                string.Concat(Math.Ceiling(damage/unit.TotalShieldHealth()*100), "%"), 10);
+                        }
                     }
                 }
             }

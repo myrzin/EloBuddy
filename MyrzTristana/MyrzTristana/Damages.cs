@@ -72,26 +72,12 @@ namespace MyrzTristana
             return spell.Slot.GetRealDamage(target);
         }
 
-        public static float GetEpDamage(Obj_AI_Base unit)
+        public static float GetWDamage(Obj_AI_Base unit)
         {
-            var e = SpellManager.E;
+            var e = SpellManager.W;
             var p = Player.Instance;
-            var s = GetStacks(unit);
-            var damage = ((new[] {0f, 60f, 70f, 80f, 90f, 100f}[e.Level]) +
-                          (new[] {0f, 0.5f, 0.65f, 0.8f, 0.95f, 1.1f}[e.Level]*p.FlatPhysicalDamageMod) +
-                          (0.5f*p.TotalMagicalDamage)) +
-                         ((new[] {0f, 18f, 21f, 24f, 27f, 30f}[e.Level]*s) +
-                          (new[] {0f, 0.15f, 0.195f, 0.24f, 0.285f, 0.33f}[e.Level]*s*p.FlatPhysicalDamageMod) +
-                          (s*0.15*p.TotalMagicalDamage));
-            return (float) damage;
-        }
-
-        public static float GetEmDamage(Obj_AI_Base unit)
-        {
-            var e = SpellManager.E;
-            var p = Player.Instance;
-            var damage = new[] {0,50,75,100,125,150}[e.Level]+0.25*p.TotalMagicalDamage;
-            return (float) damage;
+            var damage = new[] { 0, 60, 110, 160, 210, 260 }[e.Level] + 0.5 * p.TotalMagicalDamage;
+            return (float)damage;
         }
 
         public static float GetRealDamage(this SpellSlot slot, Obj_AI_Base target)
@@ -110,12 +96,23 @@ namespace MyrzTristana
             {
                 case SpellSlot.W:
 
-                    damage = new float[] {60, 110, 160, 210, 260}[spellLevel] + 0.5f*Player.Instance.TotalMagicalDamage;
+                    damage = new float[] {60, 110, 160, 210, 260}[spellLevel] + 0.5f*Player.Instance.FlatMagicDamageMod;
                     break;
 
                 case SpellSlot.E:
-                    damageType = DamageType.Mixed;
-                    damage = GetEmDamage(target) + GetEpDamage(target);
+                    damageType = DamageType.Physical;
+                    var baseDamage = new float[] {60, 70, 80, 90, 100}[spellLevel];
+                    var baseBonusAdDamage = new [] {0.5f, 0.65f, 0.80f, 0.95f, 1.1f}[spellLevel];
+                    const float baseBonusApDamage = 0.5f;
+                    var stackDamage = new float[] { 18, 21, 24, 27, 30 }[spellLevel];
+                    var stackAdDamage = new[] { 0.15f, 0.195f, 0.24f, 0.285f, 0.30f }[spellLevel];
+                    const float stackApDamage = 0.15f;
+
+                    damage = baseDamage + (baseBonusAdDamage*Player.Instance.FlatPhysicalDamageMod) +
+                             (baseBonusApDamage*Player.Instance.FlatMagicDamageMod) +
+                             (stackDamage*(GetStacks(target) - 1)) +
+                             (stackAdDamage*Player.Instance.FlatPhysicalDamageMod*(GetStacks(target) - 1)) +
+                             (stackApDamage*Player.Instance.FlatMagicDamageMod*(GetStacks(target) - 1));
                     break;
 
                 case SpellSlot.R:
@@ -129,7 +126,7 @@ namespace MyrzTristana
                 return 0;
             }
 
-            return Player.Instance.CalculateDamageOnUnit(target, damageType, damage) - 20;
+            return Player.Instance.CalculateDamageOnUnit(target, damageType, damage);
         }
     }
 }
