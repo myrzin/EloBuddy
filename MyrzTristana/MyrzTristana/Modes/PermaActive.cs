@@ -42,8 +42,8 @@ namespace MyrzTristana.Modes
             }
             if (R.IsReady() && Config.PermaActive.RKs)
             {
-                var target = TargetSelector.GetTarget(W.Range, DamageType.Physical) ??
-                             TargetSelector.GetTarget(W.Range, DamageType.Magical);
+                var target = TargetSelector.GetTarget(R.Range, DamageType.Physical) ??
+                             TargetSelector.GetTarget(R.Range, DamageType.Magical);
                 if (target != null && target.TotalShieldHealth() < R.GetRealDamage(target))
                 {
                     R.Cast(target);
@@ -51,15 +51,15 @@ namespace MyrzTristana.Modes
             }
             if (R.IsReady() && Config.PermaActive.ERKs)
             {
-                var target = TargetSelector.GetTarget(W.Range, DamageType.Physical) ??
-                             TargetSelector.GetTarget(W.Range, DamageType.Magical);
+                var target = TargetSelector.GetTarget(E.Range, DamageType.Physical) ??
+                             TargetSelector.GetTarget(E.Range, DamageType.Magical);
                 if (target != null && target.HasBuff("TristanaECharge") &&
                     target.TotalShieldHealth() < (R.GetRealDamage(target) + E.GetRealDamage(target)))
                 {
                     R.Cast(target);
                 }
             }
-            if (R.IsReady() && W.IsReady() && Config.PermaActive.WKs && Config.PermaActive.RKs)
+            if (R.IsReady() && W.IsReady() && Config.PermaActive.WKs && Config.PermaActive.RKs && Config.Modes.Combo.UseW)
             {
                 var target = TargetSelector.GetTarget(W.Range, DamageType.Physical) ??
                              TargetSelector.GetTarget(W.Range, DamageType.Magical);
