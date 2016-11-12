@@ -13,7 +13,7 @@ namespace MyrzTristana.Modes
 
         public override void Execute()
         {
-            if (W.IsReady() && Config.Modes.Combo.UseW && Config.PermaActive.WKs && Config.Modes.Combo.UseWMax < Player.HealthPercent)
+            if (W.IsReady() && Config.Modes.Combo.UseW && Config.PermaActive.WKs && Config.Modes.Combo.UseWMax < Player.HealthPercent && Config.Modes.Combo.UseWMinMana <= Player.Mana)
             {
                 var target = TargetSelector.GetTarget(W.Range, DamageType.Physical) ??
                              TargetSelector.GetTarget(W.Range, DamageType.Magical);
@@ -56,7 +56,7 @@ namespace MyrzTristana.Modes
                     R.Cast(target);
                 }
             }
-            if (R.IsReady() && W.IsReady() && Config.PermaActive.WKs && Config.PermaActive.RKs && Config.Modes.Combo.UseW && Config.Modes.Combo.UseWMax < Player.HealthPercent)
+            if (R.IsReady() && W.IsReady() && Config.PermaActive.WKs && Config.PermaActive.RKs && Config.Modes.Combo.UseW && Config.Modes.Combo.UseWMax < Player.HealthPercent && Config.Modes.Combo.UseWMinMana <= Player.Mana)
             {
                 var target = TargetSelector.GetTarget(W.Range, DamageType.Physical) ??
                              TargetSelector.GetTarget(W.Range, DamageType.Magical);
