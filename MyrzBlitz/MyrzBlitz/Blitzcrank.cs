@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using EloBuddy;
 using EloBuddy.SDK;
 using EloBuddy.SDK.Enumerations;
@@ -12,9 +13,9 @@ namespace MyrzBlitz
     public static class Blitzcrank
     {
 
-        public static int grabT;
-        public static int grabS;
-        public static float grabP;
+        public static int GrabT;
+        public static int GrabS;
+        public static float GrabP;
         public static bool HasIgnite { get; private set; }
 
         public static void Main(string[] args)
@@ -44,36 +45,56 @@ namespace MyrzBlitz
 
             // Listend to required events
             Drawing.OnDraw += OnDraw;
-            //Gapcloser.OnGapcloser += OnGapcloser;
             Interrupter.OnInterruptableSpell += OnInterruptableSpell;
+            Gapcloser.OnGapcloser += OnGapcloser;
             Obj_AI_Base.OnProcessSpellCast += Obj_AI_Base_OnProcessSpellCast;
+        }
+
+        private static void OnGapcloser(Obj_AI_Base sender, Gapcloser.GapcloserEventArgs args)
+        {
+            if (Config.PermaActive.QDashing && sender.IsEnemy)
+            {
+                if (SpellManager.Q.IsReady() && Player.Instance.IsInRange(sender, SpellManager.Q.Range) &&
+                    sender.Distance(Player.Instance.ServerPosition) > Config.Misc.MinDisQ)
+                {
+                    SpellManager.Q.Cast(args.End);
+                }
+            }
         }
 
         private static void Obj_AI_Base_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (sender.IsMe && args.SData.Name == "RocketGrab")
-                grabT++;
+                GrabT++;
+            if (args.SData.Name.ToLower().Contains("summonerflash") && sender.IsEnemy)
+            {
+                if (SpellManager.Q.IsReady() && Player.Instance.IsInRange(sender, SpellManager.Q.Range) &&
+                    sender.Distance(Player.Instance.ServerPosition) > Config.Misc.MinDisQ)
+                {
+                    SpellManager.Q.Cast(args.End);
+                }
+            }
         }
 
         private static void OnDraw(EventArgs args)
         {
-            if (!SpellManager.Q.IsReady() && Game.Time - grabP > 2)
+            if (!SpellManager.Q.IsReady() && Game.Time - GrabP > 2)
             {
                 foreach (var t in EntityManager.Heroes.Enemies.Where(t => t.HasBuff("rocketgrab2")))
                 {
-                    grabS++;
-                    grabP = Game.Time;
+                    GrabS++;
+                    GrabP = Game.Time;
                 }
             }
 
             if (Config.Drawing.ShowStats)
             {
-                if (grabT > 0)
+                if (GrabT > 0)
                 {
                     // ReSharper disable once PossibleLossOfFraction
-                    var percent = (float)grabS / (float)grabT * 100f;
-                    Drawing.DrawText(Drawing.Width * 0f, Drawing.Height * 0.12f, System.Drawing.Color.GreenYellow, " Grabs Thrown: " + grabT);
-                    Drawing.DrawText(Drawing.Width * 0f, Drawing.Height * 0.138f, System.Drawing.Color.GreenYellow, " Successful Grabs: " + grabS);
+                    var percent = (float)GrabS / (float)GrabT * 100f;
+                    Drawing.DrawText(Drawing.Width * 0f, Drawing.Height * 0.12f, System.Drawing.Color.GreenYellow, " Grabs Thrown: " + GrabT);
+                    Drawing.DrawText(Drawing.Width * 0f, Drawing.Height * 0.138f, System.Drawing.Color.GreenYellow, " Successful Grabs: " + GrabS);
                     Drawing.DrawText(Drawing.Width * 0f, Drawing.Height * 0.156f, System.Drawing.Color.GreenYellow, " Successful:" + percent + "%");
                 }
             }
@@ -90,15 +111,6 @@ namespace MyrzBlitz
 
             DamageIndicator.HealthbarEnabled = Config.Drawing.IndicatorHealthbar;
         }
-
-        /*private static void OnGapcloser(AIHeroClient sender, Gapcloser.GapcloserEventArgs args)
-        {
-            if (sender.IsEnemy && Config.Misc.GapcloserQ && SpellManager.Q.IsReady() && SpellManager.Q.IsInRange(args.End))
-            {
-                // Cast E on the gapcloser caster
-                SpellManager.Q.Cast(sender);
-            }
-        }*/
 
         private static void OnInterruptableSpell(Obj_AI_Base sender, Interrupter.InterruptableSpellEventArgs args)
         {

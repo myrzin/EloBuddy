@@ -313,16 +313,11 @@ namespace MyrzBlitz
         {
             public const string MenuName = "Miscellaneous";
 
-            //private static readonly CheckBox _gapcloser;
             private static readonly CheckBox _interrupterQ;
             private static readonly CheckBox _interrupterR;
             private static readonly Slider _minDisQ;
             private static readonly Slider _minPred;
 
-            /*public static bool GapcloserQ
-            {
-                get { return _gapcloser.CurrentValue; }
-            }*/
             public static bool InterruptQ
             {
                 get { return _interrupterQ.CurrentValue; }
@@ -348,7 +343,6 @@ namespace MyrzBlitz
                 // Initialize menu
                 var menu = Menu.AddSubMenu(MenuName);
 
-                //_gapcloser = menu.Add("miscGapcloseQ", new CheckBox("Use Q against gapclosers"));
                 _interrupterQ = menu.Add("miscInterruptQ", new CheckBox("Use Q to interrupt dangerous spells"));
                 _interrupterR = menu.Add("miscInterruptR", new CheckBox("Use R to interrupt dangerous spells"));
                 _minDisQ = menu.Add("minDisQ", new Slider("Min. Distance to Use Q", 300, 0, 800));

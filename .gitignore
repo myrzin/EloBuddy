@@ -215,3 +215,10 @@ FakesAssemblies/
 **/*.Server/GeneratedArtifacts
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
+*.suo
+MyrzBlitz/.vs/MyrzBlitz/v14/.suo
+*.dll
+*.pdb
+*.cache
+*.suo
+*.cache
