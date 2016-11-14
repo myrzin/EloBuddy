@@ -35,7 +35,8 @@ namespace MyrzBlitz.Modes
                 {
                     var prediction = Q.GetPrediction(target);
                     var qDmg = Q.GetRealDamage(target);
-                    if (prediction.HitChancePercent >= Config.Misc.MinPred && qDmg >= target.TotalShieldHealth() && Config.PermaActive.QKs)
+                    if (prediction.HitChancePercent >= Config.Misc.MinPred && qDmg >= target.TotalShieldHealth() &&
+                        Config.PermaActive.QKs && target.Distance(Player.ServerPosition) >= Config.Misc.MinDisQ)
                     {
                         Q.Cast(prediction.CastPosition);
                     }
@@ -49,7 +50,8 @@ namespace MyrzBlitz.Modes
                 {
                     var prediction = Q.GetPrediction(target);
                     var qDmg = Q.GetRealDamage(target)+R.GetRealDamage(target);
-                    if (prediction.HitChancePercent >= Config.Misc.MinPred && qDmg >= target.TotalShieldHealth() && Config.PermaActive.QKs)
+                    if (prediction.HitChancePercent >= Config.Misc.MinPred && qDmg >= target.TotalShieldHealth() &&
+                        Config.PermaActive.QKs && target.Distance(Player.ServerPosition) >= Config.Misc.MinDisQ)
                     {
                         Q.Cast(prediction.CastPosition);
                     }
@@ -58,7 +60,11 @@ namespace MyrzBlitz.Modes
 
             if (R.IsReady())
             {
-                var target = EntityManager.Heroes.Enemies.Where(e => e.IsValidTarget(R.Range) && e.TotalShieldHealth() < R.GetRealDamage(e)).OrderByDescending(e => R.GetRealDamage(e)).ToArray();
+                var target =
+                    EntityManager.Heroes.Enemies.Where(
+                        e => e.IsValidTarget(R.Range) && e.TotalShieldHealth() < R.GetRealDamage(e))
+                        .OrderByDescending(e => R.GetRealDamage(e))
+                        .ToArray();
                 if (target.Length > 0 && Config.PermaActive.RKs)
                 {
                     R.Cast();
@@ -72,23 +78,10 @@ namespace MyrzBlitz.Modes
                         EntityManager.Heroes.Enemies.Where(
                             e =>
                                 e.IsValidTarget() && e != null && e.Distance(Player.ServerPosition) < Q.Range &&
-                                e.IsDashing()))
-                {
-                    var pred = Q.GetPrediction(target);
-                    if (pred.HitChance == HitChance.Dashing)
-                    {
-                        Q.Cast(pred.CastPosition);
-                    }
-                }
-                foreach (
-                    var target in
-                        EntityManager.Heroes.Enemies.Where(
-                            e =>
-                                e.IsValidTarget() && e != null && e.Distance(Player.ServerPosition) < Q.Range &&
                                 !e.CanMove))
                 {
                     var pred = Q.GetPrediction(target);
-                    if (pred.HitChance == HitChance.Immobile)
+                    if (pred.HitChance == HitChance.Immobile && target.Distance(Player.ServerPosition) >= Config.Misc.MinDisQ)
                     {
                         Q.Cast(pred.CastPosition);
                     }
@@ -101,7 +94,7 @@ namespace MyrzBlitz.Modes
                 if (target != null)
                 {
                     var pred = Q.GetPrediction(target);
-                        if (pred.HitChance == HitChance.Dashing || pred.HitChance == HitChance.Immobile || pred.HitChance == HitChance.High)
+                        if (pred.HitChancePercent >= Config.Misc.MinPred && target.Distance(Player.ServerPosition) >= Config.Misc.MinDisQ)
                         {
                             Q.Cast(pred.CastPosition);
                         }

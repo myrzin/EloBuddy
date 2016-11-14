@@ -55,7 +55,7 @@ namespace MyrzBlitz
             if (Config.PermaActive.QDashing && sender.IsEnemy)
             {
                 if (SpellManager.Q.IsReady() && Player.Instance.IsInRange(sender, SpellManager.Q.Range) &&
-                    sender.Distance(Player.Instance.ServerPosition) > Config.Misc.MinDisQ)
+                    sender.Distance(Player.Instance.ServerPosition) >= Config.Misc.MinDisQ)
                 {
                     SpellManager.Q.Cast(args.End);
                 }
@@ -69,7 +69,7 @@ namespace MyrzBlitz
             if (args.SData.Name.ToLower().Contains("summonerflash") && sender.IsEnemy)
             {
                 if (SpellManager.Q.IsReady() && Player.Instance.IsInRange(sender, SpellManager.Q.Range) &&
-                    sender.Distance(Player.Instance.ServerPosition) > Config.Misc.MinDisQ)
+                    sender.Distance(Player.Instance.ServerPosition) >= Config.Misc.MinDisQ)
                 {
                     SpellManager.Q.Cast(args.End);
                 }
